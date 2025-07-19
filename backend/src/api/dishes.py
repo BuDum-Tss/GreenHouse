@@ -12,6 +12,7 @@ class Dish(BaseModel):
     id: str
     name: str
     price: float
+    description: str
     tags: list[str]
 
 @router.get("/{user_id}")
@@ -32,12 +33,12 @@ def get_all_dishes() -> List[Dish]:
         
         # Получаем все блюда
         cursor.execute("""
-            SELECT id, name, price FROM dishes
+            SELECT id, name, price, description, weight FROM dishes
         """)
         dishes_data = cursor.fetchall()
         
         dishes = []
-        for dish_id, name, price in dishes_data:
+        for dish_id, name, price, description, weight in dishes_data:
             # Получаем теги для текущего блюда
             cursor.execute("""
                 SELECT t.name 
@@ -46,12 +47,14 @@ def get_all_dishes() -> List[Dish]:
                 WHERE dt.dish_id = ?
             """, (dish_id,))
             tags = [tag[0] for tag in cursor.fetchall()]
-            
+            weight_postfix = " гр." if "напиток" not in tags else " мл."
+            description = f"{description+' ' if description else ''}{str(weight)+weight_postfix if weight else ''}"
             # Создаем объект Dish и добавляем в список
             dishes.append(Dish(
                 id=str(dish_id),  # Конвертируем в str, если в модели указан строковый тип
                 name=name,
                 price=price,
+                description=description,
                 tags=tags
             ))
         
@@ -69,7 +72,7 @@ def get_dishes_by_ids(ids: List[str]) -> List[Dish]:
         
         # Получаем все блюда и их теги одним запросом
         cursor.execute(f"""
-            SELECT d.id, d.name, d.price, t.name
+            SELECT d.id, d.name, d.price, d.description, d.weight, t.name
             FROM dishes d
             LEFT JOIN dish_tags dt ON d.id = dt.dish_id
             LEFT JOIN tags t ON dt.tag_id = t.id
@@ -79,7 +82,9 @@ def get_dishes_by_ids(ids: List[str]) -> List[Dish]:
         # Группируем результаты
         dishes_dict = {}
         for row in cursor.fetchall():
-            dish_id, name, price, tag_name = row
+            dish_id, name, price, description, weight, tag_name = row
+            
+            
             if dish_id not in dishes_dict:
                 dishes_dict[dish_id] = {
                     'id': str(dish_id),
@@ -89,7 +94,11 @@ def get_dishes_by_ids(ids: List[str]) -> List[Dish]:
                 }
             if tag_name:  # Если есть тег, добавляем его
                 dishes_dict[dish_id]['tags'].append(tag_name)
-        
+            
+            weight_postfix = " гр." if "напиток" not in dishes_dict[dish_id]['tags'] else " мл."
+            description = f"{description+' ' if description else ''}{str(weight)+weight_postfix if weight else ''}"
+            dishes_dict[dish_id]['description'] = description
+
         return [Dish(**dish) for dish in dishes_dict.values()]
 
 

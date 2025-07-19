@@ -46,7 +46,8 @@ INSERT OR IGNORE INTO tags (name) VALUES
     ('без глютена'),
     ('десерт'),
     ('основное блюдо'),
-    ('закуска');
+    ('закуска'),
+    ('напиток');
 
 -- Популярные ингредиенты
 INSERT OR IGNORE INTO ingredients (name) VALUES 
