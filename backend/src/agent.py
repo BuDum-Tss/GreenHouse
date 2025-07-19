@@ -11,7 +11,6 @@ class Metadata(TypedDict):
     tags: List[str]
 
 class AgentState(TypedDict):
-    user_id: str
     message: str
     metadata: Dict[str, Any]
 
