@@ -10,6 +10,7 @@ load_dotenv()
 
 LLM_MODEL = os.getenv("LLM_MODEL")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+ALLOW_ORIGINS = os.getenv("ALLOW_ORIGINS")
 DB_FILENAME = "resources/greenhouse.db"
 INITSQL_FILE = "resources/init.sql"
 

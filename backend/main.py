@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from log import setup_logging
-from src.depends import DB_FILENAME
+from src.depends import ALLOW_ORIGINS, DB_FILENAME
 from src.api.dishes import router as dishes
 from src.api.cart import router as cart
 from src.db import init_db
@@ -19,14 +19,9 @@ def on_startup():
     if not os.path.exists(DB_FILENAME):
         init_db()
 
-# Разрешение CORS для сайта
-origins = [
-    "https://greenhouse-nu.vercel.app"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[ALLOW_ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
