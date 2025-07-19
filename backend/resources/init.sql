@@ -2,7 +2,9 @@
 CREATE TABLE IF NOT EXISTS dishes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    price REAL NOT NULL
+    price REAL NOT NULL,
+    description TEXT,
+	weight INTEGER
 );
 
 -- Таблица ингредиентов (только название)

@@ -6,7 +6,7 @@ import sqlite3
 from src.agent import AgentState, Metadata, RecommendationAgent
 from src.depends import get_db_connection, get_recommendation_agent
 
-router = APIRouter(prefix="/dishes")
+router = APIRouter(prefix="/dishes", tags=["dishes"])
 
 class Dish(BaseModel):
     id: str
@@ -91,11 +91,6 @@ def get_dishes_by_ids(ids: List[str]) -> List[Dish]:
                 dishes_dict[dish_id]['tags'].append(tag_name)
         
         return [Dish(**dish) for dish in dishes_dict.values()]
-
-
-
-
-
 
 
 # === DEPRECATED ===
