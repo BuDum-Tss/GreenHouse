@@ -2,7 +2,7 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 BOT_TOKEN = "7607901680:AAGvfP5AABJcuuP-qJNwFnpzYBryGbzusbY"
-WEB_APP_URL = "https://ya.ru"
+WEB_APP_URL = "https://greenhouse-nu.vercel.app/"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
