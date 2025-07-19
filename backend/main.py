@@ -4,7 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from log import setup_logging
 from src.depends import DB_FILENAME
-from src.api import user, recommendation, dishes, cart
+from src.api.dishes import router as dishes
+from src.api.cart import router as cart
 from src.db import init_db
 
 app = FastAPI(
@@ -31,7 +32,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(user)
-app.include_router(recommendation)
 app.include_router(dishes)
-app.include_router(cart.router)
+app.include_router(cart)
