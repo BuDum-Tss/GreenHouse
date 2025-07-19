@@ -15,16 +15,16 @@ class Dish(BaseModel):
     description: str
     tags: list[str]
 
-@router.get("/{user_id}")
-def get_dishes(user_id: str,
+@router.get("")
+def get_dishes(
             prompt: Optional[str] = Query(None),
             tags: Optional[List[str]] = Query(None),
             agent: RecommendationAgent = Depends(get_recommendation_agent)) -> list[Dish]:
-    """Рекоммендация"""
+    """Рекомендация"""
     if prompt == None or prompt == "":
         return get_all_dishes()
     else:
-        ids: list[str] = agent.process(AgentState(user_id=user_id, message=prompt, metadata=Metadata(tags=tags)))
+        ids: list[str] = agent.process(AgentState(message=prompt, metadata=Metadata(tags=tags)))
         return get_dishes_by_ids(ids)
 
 def get_all_dishes() -> List[Dish]:
