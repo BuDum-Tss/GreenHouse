@@ -6,6 +6,5 @@ export default defineConfig({
   plugins: [react()],
   build: {
     base: '/GreenHouse',
-    outDir: '../docs',
   },
 });
