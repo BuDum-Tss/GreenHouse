@@ -1,6 +1,5 @@
 import sqlite3
 import os
-import dotenv
 from contextlib import contextmanager
 from langchain_openai import ChatOpenAI, OpenAI
 from langchain_community.utilities.sql_database import SQLDatabase
