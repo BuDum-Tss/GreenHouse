@@ -2,11 +2,13 @@ import { HttpApi } from './HttpApi';
 
 export class ProductsApi extends HttpApi {
   constructor() {
-    super('https://greenhouse-i6s1.onrender.com');
+    super('https://localhost:8000');
+    const user = window.Telegram.WebApp.initDataUnsafe?.user;
+    const userId = user?.id;
   }
 
   getProducts(filters) {
     const params = new URLSearchParams(filters).toString();
-    return this.sendRequest('dishes?' + params, { method: 'GET' });
+    return this.sendRequest(`dishes/${userId}?` + params, { method: 'GET' });
   }
 }
