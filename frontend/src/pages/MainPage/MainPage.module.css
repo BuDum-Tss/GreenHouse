@@ -1,0 +1,39 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+}
+
+.main {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px 16px;
+}
+
+.loader {
+  padding-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list {
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px 24px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.placeholder {
+  padding-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #9e9e9e;
+  font-size: 16px;
+}
