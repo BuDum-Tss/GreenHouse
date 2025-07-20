@@ -37,6 +37,11 @@ CREATE TABLE IF NOT EXISTS dish_tags (
     FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS users (
+	user_id	TEXT PRIMARY KEY,
+	restrictions	TEXT
+);
+
 -- Базовые теги
 INSERT OR IGNORE INTO tags (name) VALUES 
     ('веганское'),

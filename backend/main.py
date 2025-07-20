@@ -6,6 +6,8 @@ from log import setup_logging
 from src.depends import ALLOW_ORIGINS, DB_FILENAME
 from src.api.dishes import router as dishes
 from src.api.cart import router as cart
+from src.api.users import router as users
+
 from src.db import init_db
 
 app = FastAPI(
@@ -29,3 +31,4 @@ app.add_middleware(
 
 app.include_router(dishes)
 app.include_router(cart)
+app.include_router(users)

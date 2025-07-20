@@ -3,7 +3,7 @@ from typing import Optional, List
 from pydantic import BaseModel
 import sqlite3
 
-from src.agent import AgentState, Metadata, RecommendationAgent
+from src.agent import AgentState, RecommendationAgent
 from src.depends import get_db_connection, get_recommendation_agent
 
 router = APIRouter(prefix="/dishes", tags=["dishes"])
@@ -15,16 +15,16 @@ class Dish(BaseModel):
     description: str
     tags: list[str]
 
-@router.get("")
+@router.get("/{user_id}")
 def get_dishes(
+            user_id: str,
             prompt: Optional[str] = Query(None),
-            tags: Optional[List[str]] = Query(None),
             agent: RecommendationAgent = Depends(get_recommendation_agent)) -> list[Dish]:
     """Рекомендация"""
     if prompt == None or prompt == "":
         return get_all_dishes()
     else:
-        ids: list[str] = agent.process(AgentState(message=prompt, metadata=Metadata(tags=tags)))
+        ids: list[str] = agent.process(AgentState(message=prompt, restrictions=get_restrictions_by_user_id(user_id)))
         return get_dishes_by_ids(ids)
 
 def get_all_dishes() -> List[Dish]:
@@ -101,6 +101,17 @@ def get_dishes_by_ids(ids: List[str]) -> List[Dish]:
 
         return [Dish(**dish) for dish in dishes_dict.values()]
 
+def get_restrictions_by_user_id(user_id: str):
+    with get_db_connection() as db:
+        cursor = db.cursor()
+        cursor.execute(
+            "SELECT restrictions FROM users WHERE user_id = ?", 
+            (user_id,)
+        )
+        result = cursor.fetchone()
+        if result is None:
+            return None
+        return result[0]
 
 # === DEPRECATED ===
 
@@ -112,7 +123,6 @@ class DishCreate(BaseModel):
 
 @router.post("/", status_code=201, description="DEPRECATED - был использован для заполнения бд")
 async def create_dish(dish: DishCreate):
-    """"""
     try:
         with get_db_connection() as db:
             cursor = db.cursor()
