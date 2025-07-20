@@ -1,0 +1,26 @@
+.searchForm {
+  padding-bottom: 48px;
+  border-bottom: 1px solid #9e9e9e;
+}
+
+.inputWrapper {
+  width: 100%;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  border-radius: 50px;
+  border: 1px solid #9e9e9e;
+  height: 48px;
+  outline: none;
+  padding: 0px 40px 0px 12px;
+}
+
+.input:focus {
+  border-color: #bcca8d;
+}
+
+.input::placeholder {
+  color: #9e9e9e;
+}

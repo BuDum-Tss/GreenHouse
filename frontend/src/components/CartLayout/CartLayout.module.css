@@ -1,0 +1,16 @@
+.layout {
+  position: relative;
+  max-height: 100vh;
+}
+
+.counter {
+  position: absolute;
+  background-color: #bcca8d;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 12px;
+  bottom: -2px;
+  right: -4px;
+}
