@@ -1,11 +1,10 @@
 import { MinusIcon, PlusIcon } from '@phosphor-icons/react';
-import styles from './ProductItem.module.css';
 import { IconButton } from '@chakra-ui/react';
+
+import styles from './ProductItem.module.css';
 
 export const ProductItem = ({ product, onIncrease, onDecrease }) => {
   const totalPrice = product.quantity * product.price;
-
-  console.log(onIncrease);
 
   return (
     <li className={styles.item}>
@@ -21,7 +20,6 @@ export const ProductItem = ({ product, onIncrease, onDecrease }) => {
               <PlusIcon color="white" size={16} />
             </IconButton>
           </div>
-
           <span className={styles.price}>{totalPrice} р.</span>
         </div>
       </div>

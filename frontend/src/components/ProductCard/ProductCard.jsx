@@ -1,10 +1,15 @@
 import { Button } from '@chakra-ui/react';
-import styles from './ProductCard.module.css';
-import Boul from '@assets/Boul.jpg';
+
 import { useCart } from '@context';
+import BoulImage from '@assets/BoulImage.jpg';
+
+import styles from './ProductCard.module.css';
+import { images } from './constants';
 
 export const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
+
+  const image = images[product.id] ?? BoulImage;
 
   const onAddToCart = () => {
     addToCart(product);
@@ -14,7 +19,7 @@ export const ProductCard = ({ product }) => {
     <li className={styles.card}>
       <figure className={styles.figure}>
         <a className="movies-card__link" target="_blank" rel="noreferrer">
-          <img className={styles.image} src={Boul} />
+          <img className={styles.image} src={image} />
         </a>
         <figcaption className={styles.figcaption}>
           <div className={styles.text}>
